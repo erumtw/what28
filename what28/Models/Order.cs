@@ -1,0 +1,28 @@
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace what28.Models
+{
+    public class Order
+    {
+        //self properties
+        [Key]
+        public int Id { get; set; }
+
+        [Required(ErrorMessage = "Menu is Requied")]
+        public string Menu { get; set; }
+
+        [Required(ErrorMessage = "Description is Requied")]
+        public string Description { get; set; }
+
+
+
+        // model relationship properties
+        public int DeliverPostId { get; set; }
+        public virtual DeliverPost DeliverPost { get; set; }
+
+        public int OrdererId { get; set; }
+        public virtual Account Orderer { get; set; }
+
+    }
+}
