@@ -10,19 +10,21 @@ namespace what28.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Menu is Requied")]
-        public string Menu { get; set; }
+        public string? Menu { get; set; }
 
         [Required(ErrorMessage = "Description is Requied")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
 
 
         // model relationship properties
-        public int DeliverPostId { get; set; }
-        public virtual DeliverPost DeliverPost { get; set; }
+        [ForeignKey("DeliverPost")]
+        public int? DeliverPostId { get; set; }
+        public virtual DeliverPost? DeliverPost { get; set; }
 
-        public int OrdererId { get; set; }
-        public virtual Account Orderer { get; set; }
+        [ForeignKey("Account")]
+        public int? OrdererId { get; set; }
+        public virtual Account? Orderer { get; set; }
 
     }
 }

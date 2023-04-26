@@ -8,27 +8,28 @@ namespace what28.Models
 
         //self properties
         [Key]
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Required(ErrorMessage = "Restaurant is required.")]
-        public string Restaurant { get; set; }
+        public string? Restaurant { get; set; }
 
         [Required(ErrorMessage = "Duration time is required.")]
-        public int Duration { get; set; }
+        public int? Duration { get; set; }
 
         [Required(ErrorMessage = "Description is required.")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
-        public int OpenAmount { get; set; } = 5;
+        public int? OpenAmount { get; set; } = 5;
 
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 
-        public bool Status { get; set; }
+        public bool? Status { get; set; }
 
 
         // model relationship properties
-        public int PosterId { get; set; }
-        public virtual Account Poster { get; set; }
+        [ForeignKey("Account")]
+        public int? PosterId { get; set; }
+        public virtual Account? Poster { get; set; }
 
         public virtual ICollection<Order> Orderers { get; set; }
 

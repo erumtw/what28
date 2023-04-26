@@ -19,9 +19,8 @@ namespace what28.Models
         [DataType(DataType.Password)]
         [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$",
         ErrorMessage = "Password must be at least 8 characters long and contain at least one letter and one number")]
-        public  string Password { get; set; }
+        public string Password { get; set; }
 
-        [NotMapped]
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm Password")]
@@ -36,8 +35,9 @@ namespace what28.Models
 
         // model relationship properties
         public virtual ICollection<DeliverPost> DeliverPosts { get; set; }
-        public virtual ICollection<EaterPost> EaterPosts { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
+
+        public virtual ICollection<EaterPostAccount> EaterPostAccounts { get; set; }
 
     }
 }

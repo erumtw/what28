@@ -11,26 +11,20 @@ namespace what28.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Menu is required.")]
-        public string Menu { get; set; }
+        public string? Menu { get; set; }
 
         [Required(ErrorMessage = "Description is required.")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [Required(ErrorMessage = "Duration time is required.")]
-        public int Duration { get; set; }
+        public int? Duration { get; set; }
 
-        public bool Status { get; set; }
+        public bool? Status { get; set; }
 
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 
 
-        // model relationship properties
-        public int PosterId { get; set; }
-        public virtual Account Poster { get; set; }
-
-        public int BuyerId { get; set; }
-        public virtual Account Buyer { get; set; }
-
+        public virtual ICollection<EaterPostAccount> EaterPostAccounts { get; set; }
 
         public bool isTimeout(int Duration)
         {
