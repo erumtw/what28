@@ -23,6 +23,9 @@ namespace what28.Models
 
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 
+        [ForeignKey("Account")]
+        public int? PosterId { get; set; }
+        public virtual Account Poster { get; set; }
 
         public virtual ICollection<EaterPostAccount> EaterPostAccounts { get; set; }
 

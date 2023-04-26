@@ -36,7 +36,7 @@ namespace what28.Models
         // model relationship properties
         public virtual ICollection<DeliverPost> DeliverPosts { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
-
+        public virtual ICollection<EaterPost> EaterPosts { get; set; }
         public virtual ICollection<EaterPostAccount> EaterPostAccounts { get; set; }
 
     }

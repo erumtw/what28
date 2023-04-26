@@ -113,10 +113,15 @@ namespace what28.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("PosterId")
+                        .HasColumnType("int");
+
                     b.Property<bool?>("Status")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PosterId");
 
                     b.ToTable("EaterPosts");
                 });
@@ -184,6 +189,15 @@ namespace what28.Migrations
                     b.Navigation("Poster");
                 });
 
+            modelBuilder.Entity("what28.Models.EaterPost", b =>
+                {
+                    b.HasOne("what28.Models.Account", "Poster")
+                        .WithMany("EaterPosts")
+                        .HasForeignKey("PosterId");
+
+                    b.Navigation("Poster");
+                });
+
             modelBuilder.Entity("what28.Models.EaterPostAccount", b =>
                 {
                     b.HasOne("what28.Models.Account", "Buyer")
@@ -223,6 +237,8 @@ namespace what28.Migrations
                     b.Navigation("DeliverPosts");
 
                     b.Navigation("EaterPostAccounts");
+
+                    b.Navigation("EaterPosts");
 
                     b.Navigation("Orders");
                 });

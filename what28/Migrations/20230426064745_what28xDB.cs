@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace what28.Migrations
 {
     /// <inheritdoc />
-    public partial class what28DBs : Migration
+    public partial class what28xDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -25,23 +25,6 @@ namespace what28.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Accounts", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "EaterPosts",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Menu = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Duration = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<bool>(type: "bit", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EaterPosts", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -65,6 +48,55 @@ namespace what28.Migrations
                         name: "FK_DeliverPosts_Accounts_PosterId",
                         column: x => x.PosterId,
                         principalTable: "Accounts",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EaterPosts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Menu = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Duration = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PosterId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EaterPosts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EaterPosts_Accounts_PosterId",
+                        column: x => x.PosterId,
+                        principalTable: "Accounts",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Menu = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DeliverPostId = table.Column<int>(type: "int", nullable: true),
+                    OrdererId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_Accounts_OrdererId",
+                        column: x => x.OrdererId,
+                        principalTable: "Accounts",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Orders_DeliverPosts_DeliverPostId",
+                        column: x => x.DeliverPostId,
+                        principalTable: "DeliverPosts",
                         principalColumn: "Id");
                 });
 
@@ -94,32 +126,6 @@ namespace what28.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Orders",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Menu = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DeliverPostId = table.Column<int>(type: "int", nullable: true),
-                    OrdererId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Orders_Accounts_OrdererId",
-                        column: x => x.OrdererId,
-                        principalTable: "Accounts",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Orders_DeliverPosts_DeliverPostId",
-                        column: x => x.DeliverPostId,
-                        principalTable: "DeliverPosts",
-                        principalColumn: "Id");
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_DeliverPosts_PosterId",
                 table: "DeliverPosts",
@@ -134,6 +140,11 @@ namespace what28.Migrations
                 name: "IX_EaterPostAccount_EaterPostId",
                 table: "EaterPostAccount",
                 column: "EaterPostId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EaterPosts_PosterId",
+                table: "EaterPosts",
+                column: "PosterId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_DeliverPostId",
